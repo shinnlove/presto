@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- 可以配置多个appender来对应不同的输出，如文件输出，sql输出，控制台输出，邮件输出等 -->
+    <!-- [控制台STDOUT] 不同的输出类型对应着不同的class，如控制台输出class对应着 org.apache.log4j.ConsoleAppender -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">  <!-- name提供给logger或者root调用 -->
+        <param name="encoding" value="UTF-8"/>  <!-- 保存字符集 -->
+        <param name="target" value="System.out"/>  <!-- 输出到控制台 -->
+        <layout class="org.apache.log4j.PatternLayout"> <!-- loyout表示输出方式，可以多种，class值区分，PatternLayout表示自定义格式 -->
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>  <!-- 输出格式，后面解释 -->
+        </layout>
+        <!--filter过滤器设置输出的级别:ALL < DEBUG < INFO < WARN < ERROR < FATAL < OFF
+            所有下面输出的是debug到warn不会有error和fatal-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="levelMin" value="debug"/>
+            <param name="levelMax" value="warn"/>
+            <param name="AcceptOnMatch" value="true"/>  <!-- 这个属性作用参见：http://bbs.csdn.net/topics/350195913 -->
+        </filter>
+    </appender>
+
+    <!-- [公共Appender] 这个class表示输入到文件，并且按日期生成新文件-->
+    <appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File"
+               value="${webapp.root}/logs/common-default.log"/>  <!-- ${webapp.root}项目根路径，自动获得，不用配置，可自己在web.xml中配置 -->
+        <param name="Append" value="true"/>  <!-- 是否项目重启继续保存之前日志 -->
+        <param name="encoding" value="UTF-8"/>
+        <param name="threshold" value="all"/> <!-- 记录所有类型日志，记录它和比它等级高的日志all<debug -->
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>  <!-- 日期格式  例子：common-default.log.2015-09-17.log-->
+        <layout class="org.apache.log4j.PatternLayout">  <!-- 输出方式 -->
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+    </appender>
+
+    <!-- [公共Appender] 汇总错误 -->
+    <appender name="ERROR-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${webapp.root}/logs/common-error.log"/>
+        <param name="append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="threshold" value="error"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+    </appender>
+
+    <!-- [debug日志APPENDER] -->
+    <appender name="DEBUG-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/controller/debug.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+    </appender>
+
+    <!-- [service 层的info日志APPENDER] -->
+    <appender name="SERVICE-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/core-service.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} 耗时：%r [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="info"/>
+            <param name="LevelMax" value="warn"/>
+        </filter>
+    </appender>
+
+    <!-- [controller层的info日志APPENDER] -->
+    <appender name="CONTROLLER-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="${webapp.root}/logs/controller-default.log"/>
+        <param name="Append" value="true"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{ISO8601} 耗时：%r [客户端访问ip[%X{ip}]-访问时间[%X{rtime}] ] [日志来自：%-40.40c{3} 日志类型: %-5p 日志内容：%m]%n"/>  <!-- 控制器日志带有MDC存入的IP地址和访问时间，如果在项目中有过滤器，你可以把获取ip 的方法直接定义在过滤器中，然后在配置文件中配置获取ip的显示就可以了。 -->
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="info"/>
+            <param name="LevelMax" value="warn"/>
+        </filter>
+    </appender>
+
+    <!-- Root Logger -->
+    <!-- 所有logger的父类，记录控制台输出和所有的日志。 -->
+    <root>
+        <level value="ALL"></level> <!-- 限定记录等级 -->
+        <appender-ref ref="DEFAULT-APPENDER"/> <!-- 关联logger的appender -->
+        <appender-ref ref="console"/>
+    </root>
+
+    <!-- [记录严重错误的公共Logger] (name指定的是包名，阿里巴巴的日志name可以指定一些常量名，因为更改过logger代码) -->
+    <logger name="com.shinnlove.presto" additivity="false">
+        <level value="error"/>
+        <appender-ref ref="ERROR-APPENDER"/>
+    </logger>
+
+    <!-- core层的日志配置 -->
+    <logger name="com.shinnlove.presto.service" additivity="true">
+        <level value="INFO"></level>
+        <appender-ref ref="SERVICE-APPENDER"/>
+    </logger>
+
+    <!-- controller层的info和warn -->
+    <logger name="com.shinnlove.presto.controller" additivity="true">
+        <level value="INFO"></level>
+        <appender-ref ref="CONTROLLER-APPENDER"/>
+    </logger>
+
+</log4j:configuration>
