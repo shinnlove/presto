@@ -25,8 +25,6 @@ import com.shinnlove.presto.service.SQLExecuteService;
 @RequestMapping(value = "/sql")
 public class PrestoQueryController {
 
-    private static Logger logger = LoggerFactory.getLogger(PrestoQueryController.class);
-
     /** presto SQL执行服务 */
     @Autowired
     private SQLExecuteService sqlExecuteService;
@@ -43,8 +41,6 @@ public class PrestoQueryController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String hello() {
-        LoggerUtil.info(logger, "这是controller层Log4j的info日志。");
-        LoggerUtil.warn(logger, "这是controller层Log4j的warn日志。");
         return "hello, this is controller.";
     }
 

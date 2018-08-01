@@ -27,12 +27,12 @@
         <servlet-name>springMVC</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
     <!-- 加载所有spring配置文件，可以配置多个，英文逗号分隔，但不要重复 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:META-INF/spring/*.xml</param-value>
     </context-param>
-
     <!-- 添加spring上下文监听器 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

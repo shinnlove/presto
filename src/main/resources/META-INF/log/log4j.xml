@@ -15,7 +15,7 @@
             所有下面输出的是debug到warn不会有error和fatal-->
         <filter class="org.apache.log4j.varia.LevelRangeFilter">
             <param name="levelMin" value="debug"/>
-            <param name="levelMax" value="warn"/>
+            <param name="levelMax" value="error"/>
             <param name="AcceptOnMatch" value="true"/>  <!-- 这个属性作用参见：http://bbs.csdn.net/topics/350195913 -->
         </filter>
     </appender>
@@ -46,7 +46,7 @@
 
     <!-- [debug日志APPENDER] -->
     <appender name="DEBUG-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="${webapp.root}/logs/controller/debug.log"/>
+        <param name="File" value="${webapp.root}/logs/debug.log"/>
         <param name="Append" value="true"/>
         <param name="encoding" value="UTF-8"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
@@ -97,12 +97,12 @@
     <!-- [记录严重错误的公共Logger] (name指定的是包名，阿里巴巴的日志name可以指定一些常量名，因为更改过logger代码) -->
     <!-- 当additivity="false"时，root中的配置就失灵了，不遵循缺省的继承机制——子类只会在自己的appender里输出 -->
     <logger name="com.shinnlove.presto" additivity="false">
-        <level value="error"/>
+        <level value="ERROR"/>
         <appender-ref ref="ERROR-APPENDER"/>
     </logger>
 
     <!-- core层的日志配置 -->
-    <logger name="com.shinnlove.presto.service" additivity="true">
+    <logger name="com.shinnlove.presto.service" additivity="false">
         <level value="INFO"></level>
         <appender-ref ref="SERVICE-APPENDER"/>
     </logger>
