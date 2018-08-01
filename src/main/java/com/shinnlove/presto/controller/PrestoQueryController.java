@@ -4,6 +4,9 @@
  */
 package com.shinnlove.presto.controller;
 
+import com.shinnlove.presto.util.log.LoggerUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +25,8 @@ import com.shinnlove.presto.service.SQLExecuteService;
 @RequestMapping(value = "/sql")
 public class PrestoQueryController {
 
+    private static Logger logger = LoggerFactory.getLogger(PrestoQueryController.class);
+
     /** presto SQL执行服务 */
     @Autowired
     private SQLExecuteService sqlExecuteService;
@@ -38,6 +43,8 @@ public class PrestoQueryController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String hello() {
+        LoggerUtil.info(logger, "这是controller层Log4j的info日志。");
+        LoggerUtil.warn(logger, "这是controller层Log4j的warn日志。");
         return "hello, this is controller.";
     }
 

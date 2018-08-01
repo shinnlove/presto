@@ -30,7 +30,6 @@ public interface SQLExecuteService {
      * @param sql
      * @return
      */
-    @Deprecated
     int executeSQL(String sql) throws SystemException;
 
 }

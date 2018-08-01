@@ -95,6 +95,7 @@
     </root>
 
     <!-- [记录严重错误的公共Logger] (name指定的是包名，阿里巴巴的日志name可以指定一些常量名，因为更改过logger代码) -->
+    <!-- 当additivity="false"时，root中的配置就失灵了，不遵循缺省的继承机制——子类只会在自己的appender里输出 -->
     <logger name="com.shinnlove.presto" additivity="false">
         <level value="error"/>
         <appender-ref ref="ERROR-APPENDER"/>
@@ -107,7 +108,7 @@
     </logger>
 
     <!-- controller层的info和warn -->
-    <logger name="com.shinnlove.presto.controller" additivity="true">
+    <logger name="com.shinnlove.presto.controller" additivity="false">
         <level value="INFO"></level>
         <appender-ref ref="CONTROLLER-APPENDER"/>
     </logger>
