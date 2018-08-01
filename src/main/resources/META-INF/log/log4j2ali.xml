@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <property name="ctx:log_root">${webapp.root}</property>
+        <property name="ctx:app_name">presto</property>
+        <property name="ctx:log_level">info</property>
+    </properties>
+    <Appenders>
+        <Console name="STDOUT-APPENDER" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p %c{2} - %m%n" charset="UTF-8"/>
+        </Console>
+        <Console name="STDERR-APPENDER" target="SYSTEM_ERR">
+            <PatternLayout pattern="%-5p %c{2} - %m%n" charset="UTF-8"/>
+        </Console>
+
+        <RollingFile name="ERROR-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/common-error.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/common-error.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <Filters>
+                <!-- only error fatal log -->
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="WARN-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/common-warn.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/common-warn.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <Filters>
+                <!-- only warn log -->
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="APP-DEFAULT-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/app-default.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/app-default.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="APP-INTEGRATION-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-integration.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-integration.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="APP-WEB-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-web.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-web.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="CLIENT-CACHE-MONITOR-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-client-cache-monitor.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-client-cache-monitor.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="UCM-CACHE-MONITOR-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-ucm-cache-monitor.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-ucm-cache-monitor.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="APP-BIZ-SERVICE-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-biz-service.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-biz-service.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="APP-BIZ-CARDBIN-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-biz-cardbin.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-biz-cardbin.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="APP-BIZ-SHARED-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-biz-shared.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-biz-shared.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+        <RollingFile name="APP-DATA-COMPARE-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-data-compare.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-biz-service.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="FCFLUXCONF-CLIENT-COMMON-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/msfluxconf-client-common.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/msfluxconf-client-common.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+        <RollingFile name="FCFLUXCONF-CLIENT-CACHE-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/msfluxconf-client-cache.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/msfluxconf-client-cache.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="presto-CHANGE-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/presto-change.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/presto-change.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="MASTERDATA-CLIENT-CACHE-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/masterdata-cache.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/masterdata-cache.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="GBK"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="SOFA-DEFAULT-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/sofa-default.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/sofa-default.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{traceId} %X{rpcId} - %X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <!-- qingting -->
+
+        <RollingFile name="BASEMENT-HTTPCLIENT-DIGEST-APPENDER"
+                     fileName="${ctx:log_root}/${ctx:app_name}/basement-httpclient-digest.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/basement-httpclient-digest.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <RollingFile name="BASEMENT-CLIENT"
+                     fileName="${ctx:log_root}/${ctx:app_name}/basement-client.log"
+                     filePattern="${ctx:log_root}/${ctx:app_name}/basement-client.log.%d{yyyy-MM-dd}"
+                     append="true">
+            <PatternLayout
+                    pattern="%d [%X{loginUserEmail}/%X{loginUserID}/%X{remoteAddr}/%X{clientId} - %X{requestURIWithQueryString}] %-5p %c{2} - %m%n"
+                    charset="UTF-8"/>
+            <TimeBasedTriggeringPolicy/>
+            <DefaultRolloverStrategy/>
+        </RollingFile>
+
+        <!-- qingting end -->
+    </Appenders>
+
+    <Loggers>
+        <Logger name="STDOUT" additivity="false" level="info">
+            <AppenderRef ref="STDOUT-APPENDER"/>
+        </Logger>
+        <Logger name="STDERR" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="STDERR-APPENDER"/>
+        </Logger>
+        <Logger name="com.shinnlove.presto" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-DEFAULT-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="APP-BIZ-SERVICE" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-BIZ-SERVICE-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="APP-BIZ-CARDBIN" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-BIZ-CARDBIN-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="APP-BIZ-SHARED" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-BIZ-SHARED-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="APP-DATA-COMPARE" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-DATA-COMPARE-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="CLIENT-CACHE-MONITOR" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="CLIENT-CACHE-MONITOR-APPENDER"/>
+        </Logger>
+        <Logger name="UCM-CACHE-MONITOR" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="UCM-CACHE-MONITOR-APPENDER"/>
+        </Logger>
+        <Logger name="APP-INTEGRATION" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-INTEGRATION-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="APP-WEB" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="APP-WEB-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="FCFLUXCONF-CLIENT-COMMON" additivity="false" level="INFO">
+            <AppenderRef ref="FCFLUXCONF-CLIENT-COMMON-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="FCFLUXCONF-CLIENT-CACHE" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="FCFLUXCONF-CLIENT-CACHE-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <Logger name="masterdata-CACHE" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="MASTERDATA-CLIENT-CACHE-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+
+        <Logger name="presto-CHANGE" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="presto-CHANGE-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+
+        <!-- qingting -->
+
+        <Logger name="BASEMENT-HTTPCLIENT-DIGEST" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="BASEMENT-HTTPCLIENT-DIGEST-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+
+        <Logger name="BASEMENT-CLIENT" additivity="false" level="${ctx:log_level}">
+            <AppenderRef ref="STDOUT-APPENDER"/>
+            <AppenderRef ref="BASEMENT-CLIENT-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Logger>
+        <!-- qingting -->
+
+        <Root level="${ctx:log_level}">
+            <AppenderRef ref="APP-DEFAULT-APPENDER"/>
+            <AppenderRef ref="WARN-APPENDER"/>
+            <AppenderRef ref="ERROR-APPENDER"/>
+        </Root>
+    </Loggers>
+</Configuration>

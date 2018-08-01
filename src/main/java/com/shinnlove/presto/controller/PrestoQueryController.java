@@ -31,7 +31,8 @@ public class PrestoQueryController {
 
 //    private static final Logger PACKAGE_LOG = LoggerFactory.getLogger(PrestoQueryController.class);
 
-    private static final Logger logger = LoggerFactory.getLogger("org.shinnlove.presto");
+    private static final Logger logger = LoggerFactory.getLogger("APP-BIZ-SERVICE");
+    private static final Logger logger2 = LoggerFactory.getLogger(PrestoQueryController.class);
 
     /** presto SQL执行服务 */
     @Autowired
@@ -51,10 +52,13 @@ public class PrestoQueryController {
     public String hello() {
         //        LoggerUtil.info(TEST_LOG, "你好");
         LoggerUtil.info(logger, "你好");
+        LoggerUtil.info(logger2, "你好");
         //        LoggerUtil.warn(TEST_LOG, "警告");
         LoggerUtil.warn(logger, "警告");
+        LoggerUtil.warn(logger2, "警告");
         //        LoggerUtil.error(ERROR_LOG, new RuntimeException("自定义错误"),"错误");
         LoggerUtil.error(logger, new RuntimeException("自定义错误"),"错误");
+        LoggerUtil.error(logger2, new RuntimeException("自定义错误"),"错误");
         return "hello, this is controller.";
     }
 
