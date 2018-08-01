@@ -25,6 +25,12 @@ import com.shinnlove.presto.service.SQLExecuteService;
 @RequestMapping(value = "/sql")
 public class PrestoQueryController {
 
+    private static final Logger ERROR_LOG = LoggerFactory.getLogger("logger.error");
+
+    private static final Logger TEST_LOG = LoggerFactory.getLogger("logger.test");
+
+    private static final Logger PACKAGE_LOG = LoggerFactory.getLogger(PrestoQueryController.class);
+
     /** presto SQL执行服务 */
     @Autowired
     private SQLExecuteService sqlExecuteService;
@@ -41,6 +47,11 @@ public class PrestoQueryController {
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String hello() {
+        LoggerUtil.info(TEST_LOG, "你好");
+        LoggerUtil.info(PACKAGE_LOG, "你好");
+        LoggerUtil.warn(TEST_LOG, "警告");
+        LoggerUtil.warn(PACKAGE_LOG, "警告");
+        LoggerUtil.error(ERROR_LOG, new RuntimeException("自定义错误"),"错误");
         return "hello, this is controller.";
     }
 
