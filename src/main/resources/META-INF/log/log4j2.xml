@@ -17,6 +17,7 @@
     <properties>
         <!--<property name="LOG_HOME">${sys:catalina.home}/logs</property>-->
         <property name="LOG_HOME">${webapp.root}/logs</property>
+        <property name="USER_HOME">${sys:user.home}/logs</property>
     </properties>
     <Appenders>
         <!--这个输出控制台的配置 -->
