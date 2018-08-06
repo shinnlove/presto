@@ -16,6 +16,9 @@ import com.shinnlove.presto.util.code.SystemResultCode;
 import com.shinnlove.presto.util.exception.SystemException;
 import com.shinnlove.presto.util.log.LoggerUtil;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 使用JDBC执行sql的服务接口实现类。
  *
@@ -39,7 +42,7 @@ public class SQLExecuteServiceImpl implements SQLExecuteService {
     public Object querySQL(String sql) throws SystemException {
         Object result = null;
         try {
-            result = jdbcTemplate.queryForObject(sql, Object.class);
+             result = jdbcTemplate.queryForObject(sql, Object.class);
         } catch (DataAccessException e) {
             LoggerUtil.error(logger, e, "SQL语句查询出错，原因是：", e.getMessage());
             throw new SystemException(SystemResultCode.DB_QUERY_ERROR, e);
@@ -68,5 +71,28 @@ public class SQLExecuteServiceImpl implements SQLExecuteService {
         }
         return result;
     }
+
+    /**
+     * @see com.shinnlove.presto.service.SQLExecuteService#querySQLByID(int)
+     */
+    @Override
+    public List<Map<String, Object>>  querySQLByID(int ID) throws SystemException {
+        List<Map<String, Object>> result = null;
+        try {
+            // update如果是insert语句必须跟参数
+            String sql = "select * from user where id = 1";
+            result = jdbcTemplate.queryForList(sql);
+        } catch (DataAccessException e) {
+            LoggerUtil.error(logger, e, "SQL语句执行出错，原因是：", e.getMessage());
+            throw new SystemException(SystemResultCode.DB_EXECUTE_ERROR, e);
+        } catch (Exception e) {
+            LoggerUtil.error(logger, e, "系统错误，原因是：", e.getMessage());
+            throw new SystemException(SystemResultCode.SYSTEM_ERROR, e);
+        }
+        return result;
+    }
+
+
+
 
 }

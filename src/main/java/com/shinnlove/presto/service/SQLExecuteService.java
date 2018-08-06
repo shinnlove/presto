@@ -6,6 +6,9 @@ package com.shinnlove.presto.service;
 
 import com.shinnlove.presto.util.exception.SystemException;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 使用JDBC执行sql的服务接口。
  *
@@ -31,5 +34,8 @@ public interface SQLExecuteService {
      * @return
      */
     int executeSQL(String sql) throws SystemException;
+
+
+    List<Map<String, Object>> querySQLByID(int ID) throws SystemException;
 
 }

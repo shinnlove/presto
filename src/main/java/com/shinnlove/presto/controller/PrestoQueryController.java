@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shinnlove.presto.service.SQLExecuteService;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 执行`presto`SQL查询请求的控制器。
  *
@@ -29,10 +33,12 @@ public class PrestoQueryController {
     @Autowired
     private SQLExecuteService sqlExecuteService;
 
-    @RequestMapping(value = "/query", method = RequestMethod.POST)
-    public void sqlQuery(String sql) {
-        sqlExecuteService.querySQL(sql);
-    }
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    public int sqlQuery() {
+
+        List<Map<String, Object>> list = sqlExecuteService.querySQLByID(1);
+        return list.size();
+        }
 
     @RequestMapping(value = "/execute", method = RequestMethod.POST)
     public void sqlExecute(String sql) {
