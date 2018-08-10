@@ -23,6 +23,10 @@
     <!-- converter 媒体类型 -->
     <util:list id="supportedMediaTypesList" value-type="java.lang.String">
         <value>application/json;charset=UTF-8</value>
+        <!-- MappingJackson还可以配置，根据需要而定 -->
+        <!-- text/plain;charset=UTF-8 -->
+        <!-- text/*;charset=UTF-8 -->
+        <!-- */*;charset=UTF-8 -->
     </util:list>
 
     <!-- spring3.x converters -->
