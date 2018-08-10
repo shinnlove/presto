@@ -25,6 +25,12 @@ public final class SystemConsts {
     /** 错误信息，0的时候是ok，其他都各自信息 */
     public static final String ERROR_MSG    = "errMsg";
 
+    /** 没有错误的code */
+    public static final String NO_ERROR_CODE = "0";
+
+    /** 没有错误的信息 */
+    public static final String NO_ERROR_MSG  = "ok";
+
     /** 数据字段，如果是查询类型的 */
     public static final String DATA         = "data";
 

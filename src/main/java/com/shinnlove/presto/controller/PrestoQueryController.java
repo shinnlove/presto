@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.shinnlove.presto.controller.advice.CommonExceptionAdvice;
 import com.shinnlove.presto.model.User;
 import com.shinnlove.presto.service.UserQueryService;
 import com.shinnlove.presto.util.exception.SystemException;
+import com.shinnlove.presto.util.tools.ResponseUtil;
 
 /**
  * 执行`presto`SQL查询请求的控制器。
@@ -35,13 +37,15 @@ public class PrestoQueryController {
     private UserQueryService userQueryService;
 
     @RequestMapping(value = "/id", method = { RequestMethod.GET, RequestMethod.POST })
-    public User sqlQuery(String id) {
-        return userQueryService.getUserById(Integer.valueOf(id));
+    public JSONObject sqlQuery(String id) {
+        User user = userQueryService.getUserById(Integer.valueOf(id));
+        return ResponseUtil.success(user);
     }
 
     @RequestMapping(value = "/name", method = { RequestMethod.GET, RequestMethod.POST })
-    public List<User> sqlExecute(String name) {
-        return userQueryService.getUserListByName(name);
+    public JSONObject sqlExecute(String name) {
+        List<User> userList = userQueryService.getUserListByName(name);
+        return ResponseUtil.success(userList);
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
