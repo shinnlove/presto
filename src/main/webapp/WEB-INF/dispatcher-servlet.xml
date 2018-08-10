@@ -27,18 +27,20 @@
 
     <!-- spring3.x converters -->
     <util:list id="converters">
+        <!-- pick up default -->
+        <bean class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+        <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
         <!-- 字符串编码 -->
-        <bean id="stringHttpMessageConverter"
-              class="org.springframework.http.converter.StringHttpMessageConverter"
+        <bean class="org.springframework.http.converter.StringHttpMessageConverter"
               p:supportedMediaTypes-ref="supportedMediaTypesList"/>
-        <!-- json转换 -->
-        <bean id="jsonHttpMessageConverter"
-              class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
+        <!-- json转换，记得三个关联的jar -->
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
               p:supportedMediaTypes-ref="supportedMediaTypesList"/>
     </util:list>
 
     <!-- Shinnlove Tips: Use `RequestMappingHandlerAdapter` instead of `AnnotationMethodHandlerAdapter` since spring 3.2. -->
-    <!-- @RestController、@ResponseBody或HttpEntity使用类——显示声明，覆盖默认装载 -->
+    <!-- @RestController、@ResponseBody或HttpEntity类会使用——若显示声明覆盖默认装载 -->
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
           p:messageConverters-ref="converters">
     </bean>
