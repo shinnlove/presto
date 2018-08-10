@@ -20,6 +20,39 @@
     <!-- 自动扫描装配，支持spring引入的新注解(@ControllerAdvice等) -->
     <context:component-scan base-package="com.shinnlove.presto"/>
 
+    <!-- 静态资源映射，设置为资源文件避免被springmvc再次拦截，本项目放在static中 -->
+    <mvc:resources mapping="/css/**" location="/WEB-INF/static/css/"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/static/js/"/>
+    <mvc:resources mapping="/images/**" location="/WEB-INF/static/images/"/>
+    <mvc:resources mapping="/error/**" location="/WEB-INF/views/error/"/>
+
+    <!-- spring mvc 基本异常处理(比web.xml中配置错误更细粒度) -->
+    <!-- 但是注意：@ControllerAdvice已经进行了所有应用层的错误捕捉，服务器只需要管404、50x等错误即可(`SimpleMappingExceptionResolver`有点小鸡肋) -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- 为所有的异常定义默认的异常处理页面，exceptionMappings未定义的异常使用本默认配置 -->
+        <property name="defaultErrorView" value="error"></property>
+        <!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
+        <property name="exceptionAttribute" value="ex"></property>
+        <!-- 定义需要特殊处理的异常，用全类名作为key，异常页路径+文件名作为值，将不同的异常映射到不同的页面上。 -->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="IOException">error/ioex</prop>
+                <prop key="java.sql.SQLException">error/sqlex</prop>
+                <!-- 这个`SystemException`不会被父类`Throwable`拦截到 -->
+                <prop key="com.shinnlove.presto.util.exception.SystemException">error/mvcErrorPage</prop>
+                <prop key="java.lang.Throwable">error/mvcErrorPage</prop>
+            </props>
+        </property>
+        <!-- statusCodes并不是把view->code再让web.xml处理(暂时不知道干嘛用的，可以先删掉) -->
+        <property name="statusCodes">
+            <props>
+                <prop key="error/ioex">500</prop>
+                <prop key="error/sqlex">503</prop>
+                <prop key="error/mvcErrorPage">404</prop>
+            </props>
+        </property>
+    </bean>
+
     <!-- converter 媒体类型 -->
     <util:list id="supportedMediaTypesList" value-type="java.lang.String">
         <value>application/json;charset=UTF-8</value>
@@ -48,5 +81,17 @@
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
           p:messageConverters-ref="converters">
     </bean>
+
+    <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀(如果最后一个还是表示文件夹,则最后的斜杠不要漏了) 使用JSP-->
+    <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/><!--设置JSP文件的目录位置-->
+        <property name="suffix" value=".jsp"/>
+        <property name="exposeContextBeansAsAttributes" value="true"/>
+    </bean>
+
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
 </beans>
