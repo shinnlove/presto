@@ -70,7 +70,7 @@ public class ServiceExecuteAspect {
         // 打印Service层公共日志
         LoggerUtil.info(
             logger,
-            "【SAL服务调用】开始" + fullPackageName + "." + methodName + ":" + "[args="
+            "【Service服务调用】开始" + fullPackageName + "." + methodName + ":" + "[args="
                     + ToStringBuilder.reflectionToString(args, ToStringStyle.SHORT_PREFIX_STYLE)
                     + "]");
 
@@ -85,13 +85,13 @@ public class ServiceExecuteAspect {
         } catch (Exception e) {
             // 处理已检查异常
             successFlag = "N";
-            LoggerUtil.error(logger, e, "【SAL服务调用】【" + methodName + "】服务调用中出现已检查异常。");
+            LoggerUtil.error(logger, e, "【Service服务调用】【" + methodName + "】服务调用中出现已检查异常。");
             throw new SystemException(SystemResultCode.SERVICE_INVOKE_ERROR, e, "未知异常，ex="
                                                                                 + e.getMessage());
         } catch (Throwable t) {
             // 兜底
             successFlag = "N";
-            LoggerUtil.error(logger, t, "【SAL服务调用】【" + methodName + "】系统遇到未知Throwable错误。");
+            LoggerUtil.error(logger, t, "【Service服务调用】【" + methodName + "】系统遇到未知Throwable错误。");
             throw new SystemException(SystemResultCode.SYSTEM_ERROR, new RuntimeException(t),
                 "未知异常，ex=" + t.getMessage());
         } finally {
