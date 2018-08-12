@@ -7,7 +7,9 @@ package com.shinnlove.presto.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import com.shinnlove.presto.model.User;
@@ -35,6 +37,43 @@ public class UserQueryServiceImpl implements UserQueryService {
     /** spring-jdbc集成 */
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    /**
+     * @see com.shinnlove.presto.service.UserQueryService#countUser()
+     */
+    @Override
+    public int countUser() {
+        String sql = "select count(*) from user";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+    }
+
+    /**
+     * @see com.shinnlove.presto.service.UserQueryService#addUser(User) 
+     */
+    @Override
+    public int addUser(User user) {
+        String sql = "insert into user (name, password, age) values (?, ?, ?)";
+        return jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getAge());
+    }
+
+    /**
+     * @see com.shinnlove.presto.service.UserQueryService#deleteUser(int)
+     */
+    @Override
+    public int deleteUser(int id) {
+        String sql = "delete from user where id = ?";
+        return jdbcTemplate.update(sql, id);
+    }
+
+    /**
+     * @see com.shinnlove.presto.service.UserQueryService#getAllUser()
+     */
+    @Override
+    public List<User> getAllUser() {
+        String sql = "select id, name, password, age from user";
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>();
+        return jdbcTemplate.query(sql, rowMapper);
+    }
 
     /**
      * @see com.shinnlove.presto.service.UserQueryService#getUserById(int) 
