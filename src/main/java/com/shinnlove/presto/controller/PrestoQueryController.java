@@ -18,6 +18,10 @@ import com.shinnlove.presto.service.UserQueryService;
 import com.shinnlove.presto.util.exception.SystemException;
 import com.shinnlove.presto.util.tools.ResponseUtil;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 执行`presto`SQL查询请求的控制器。
  *
@@ -36,11 +40,20 @@ public class PrestoQueryController {
     @Autowired
     private UserQueryService userQueryService;
 
+<<<<<<< HEAD
+    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    public int sqlQuery() {
+
+        List<Map<String, Object>> list = sqlExecuteService.querySQLByID(1);
+        return list.size();
+        }
+=======
     @RequestMapping(value = "/id", method = { RequestMethod.GET, RequestMethod.POST })
     public JSONObject sqlQuery(String id) {
         User user = userQueryService.getUserById(Integer.valueOf(id));
         return ResponseUtil.success(user);
     }
+>>>>>>> 199138f9ae576b26f369ce832b2aeeb7f0d841ed
 
     @RequestMapping(value = "/name", method = { RequestMethod.GET, RequestMethod.POST })
     public JSONObject sqlExecute(String name) {
