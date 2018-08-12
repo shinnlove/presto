@@ -38,7 +38,7 @@ public class ServiceExecuteAspect {
      * 切点
      */
     @Pointcut("execution(* com.shinnlove.presto.service.impl.*.*(..))")
-    public void point() {
+    public void pointInvoke() {
     }
 
     /**
@@ -47,8 +47,8 @@ public class ServiceExecuteAspect {
      * @param jp
      * @return
      */
-    @Around("point()")
-    public Object remoteServiceAround(ProceedingJoinPoint jp) {
+    @Around("pointInvoke()")
+    public Object serviceAround(ProceedingJoinPoint jp) {
         long start = System.currentTimeMillis();
 
         // 全类名
@@ -68,8 +68,7 @@ public class ServiceExecuteAspect {
         Object result = null;
 
         // 打印Service层公共日志
-        LoggerUtil.info(
-            logger,
+        LoggerUtil.info(logger,
             "【Service服务调用】开始" + fullPackageName + "." + methodName + ":" + "[args="
                     + ToStringBuilder.reflectionToString(args, ToStringStyle.SHORT_PREFIX_STYLE)
                     + "]");

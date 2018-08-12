@@ -6,11 +6,9 @@ package com.shinnlove.presto.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
 
 import com.shinnlove.presto.model.User;
 import com.shinnlove.presto.service.UserQueryService;
@@ -31,11 +29,9 @@ import com.shinnlove.presto.service.aspect.ServiceExecuteAspect;
  * @author shinnlove.jinsheng
  * @version $Id: UserQueryServiceImpl.java, v 0.1 2018-08-10 下午3:14 shinnlove.jinsheng Exp $$
  */
-@Service(value = "userQueryService")
 public class UserQueryServiceImpl implements UserQueryService {
 
-    /** spring-jdbc集成 */
-    @Autowired
+    /** spring-jdbc集成(bean配置的bean不能`@Autowired`注入) */
     private JdbcTemplate jdbcTemplate;
 
     /**
@@ -71,7 +67,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public List<User> getAllUser() {
         String sql = "select id, name, password, age from user";
-        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>();
+        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
 
@@ -104,6 +100,15 @@ public class UserQueryServiceImpl implements UserQueryService {
         String sql = "select id, name, password, age from user where name = ?";
         return jdbcTemplate.query(sql, new Object[] { name }, (rs, rowNum) -> new User(
             rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+    }
+
+    /**
+     * Setter method for property jdbcTemplate.
+     *
+     * @param jdbcTemplate value to be assigned to property jdbcTemplate
+     */
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
 }
