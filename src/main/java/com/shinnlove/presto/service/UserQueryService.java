@@ -21,6 +21,36 @@ import com.shinnlove.presto.model.User;
 public interface UserQueryService {
 
     /**
+     * 查询用户数量。
+     *
+     * @return
+     */
+    int countUser();
+
+    /**
+     * 新增用户。
+     * 
+     * @param user
+     * @return
+     */
+    int addUser(User user);
+
+    /**
+     * 根据用户id删除某个用户。
+     *
+     * @param id
+     * @return
+     */
+    int deleteUser(int id);
+
+    /**
+     * 获取数据库中所有的用户。
+     *
+     * @return
+     */
+    List<User> getAllUser();
+
+    /**
      * 根据id查询单个用户。
      *
      * @return
