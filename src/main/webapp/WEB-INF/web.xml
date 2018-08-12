@@ -39,7 +39,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!-- spring context -->
+    <!-- spring context & listener -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:META-INF/spring/*.xml</param-value>
