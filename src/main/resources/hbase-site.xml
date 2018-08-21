@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!-- 此参数决定了每次从服务器scan获取的数据量，默认会是1，性能很低，因此设置为100以上，每行数据太大的，可以小一些，否则可以更高 -->
+    <property>
+        <name>hbase.client.scanner.caching</name>
+        <value>200</value>
+    </property>
+
+    <!-- 此参数定义客户端写缓存的大小,这里配置了5M -->
+    <property>
+        <name>hbase.client.write.buffer</name>
+        <value>5242880</value>
+    </property>
+
+    <!-- 其他参数根据应用情况配置，请和HBase组讨论具体业务场景-->
+    <!-- 以下参数请按照实际申请的实例信息填写-->
+    <property>
+        <name>bdp.hbase.erp</name>
+        <value>yangyuan64</value>
+    </property>
+
+    <property>
+        <name>bdp.hbase.instance.name</name>
+        <value>SL1000000003014</value>
+    </property>
+
+    <property>
+        <name>bdp.hbase.accesskey</name>
+        <value>MZYH5UIKEY3BU7CNB5FWLS2OTA</value>
+    </property>
+
+    <!--是否切换到备份集群-->
+    <property>
+        <name>slave.cluster.switch</name>
+        <value>false</value>
+    </property>
+</configuration>

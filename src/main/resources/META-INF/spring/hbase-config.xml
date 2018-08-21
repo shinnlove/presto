@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName">
+
+    <!-- 配置HbaseTemplate -->
+    <bean id="configuration" class="com.shinnlove.presto.dao.hbase.MyConfiguration">
+        <constructor-arg>
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="bdp.hbase.erp" value="yangyuan64"></entry>
+                <entry key="bdp.hbase.instance.name" value="SL1000000003014"></entry>
+                <entry key="bdp.hbase.accesskey" value="MZYH5UIKEY3BU7CNB5FWLS2OTA"></entry>
+            </map>
+        </constructor-arg>
+    </bean>
+    <bean id="myHbaseTemplate" class="com.shinnlove.presto.dao.hbase.MyHbaseTemplate">
+        <constructor-arg ref="configuration"/>
+    </bean>
+    <bean id="springHbaseDemo" class="com.shinnlove.presto.dao.hbase.SpringHbaseDemo"
+          p:myHbaseTemplate-ref="myHbaseTemplate"/>
+
+</beans>

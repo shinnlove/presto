@@ -32,7 +32,7 @@ import com.shinnlove.presto.service.aspect.ServiceExecuteAspect;
 public class UserQueryServiceImpl implements UserQueryService {
 
     /** spring-jdbc集成(bean配置的bean不能`@Autowired`注入) */
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate mysqlJdbcTemplate;
 
     /**
      * @see com.shinnlove.presto.service.UserQueryService#countUser()
@@ -40,7 +40,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public int countUser() {
         String sql = "select count(*) from user";
-        return jdbcTemplate.queryForObject(sql, Integer.class);
+        return mysqlJdbcTemplate.queryForObject(sql, Integer.class);
     }
 
     /**
@@ -49,7 +49,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public int addUser(User user) {
         String sql = "insert into user (name, password, age) values (?, ?, ?)";
-        return jdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getAge());
+        return mysqlJdbcTemplate.update(sql, user.getName(), user.getPassword(), user.getAge());
     }
 
     /**
@@ -58,7 +58,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public int deleteUser(int id) {
         String sql = "delete from user where id = ?";
-        return jdbcTemplate.update(sql, id);
+        return mysqlJdbcTemplate.update(sql, id);
     }
 
     /**
@@ -68,7 +68,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     public List<User> getAllUser() {
         String sql = "select id, name, password, age from user";
         RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
-        return jdbcTemplate.query(sql, rowMapper);
+        return mysqlJdbcTemplate.query(sql, rowMapper);
     }
 
     /**
@@ -78,8 +78,8 @@ public class UserQueryServiceImpl implements UserQueryService {
     public User getUserById(int id) {
         // 这种sql以后下沉到仓储层去，让service清爽一点
         String sql = "select id, name, password, age from user where id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id },
-            (rs, rowNum) -> new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+        return mysqlJdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> new User(
+            rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
     }
 
     /**
@@ -88,7 +88,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public User getUserByName(String name) {
         String sql = "select id, name, password, age from user where name = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { name },
+        return mysqlJdbcTemplate.queryForObject(sql, new Object[] { name },
             (rs, rowNum) -> new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
     }
 
@@ -98,17 +98,17 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Override
     public List<User> getUserListByName(String name) {
         String sql = "select id, name, password, age from user where name = ?";
-        return jdbcTemplate.query(sql, new Object[] { name }, (rs, rowNum) -> new User(
-            rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
+        return mysqlJdbcTemplate.query(sql, new Object[] { name },
+            (rs, rowNum) -> new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4)));
     }
 
     /**
-     * Setter method for property jdbcTemplate.
+     * Setter method for property mysqlJdbcTemplate.
      *
-     * @param jdbcTemplate value to be assigned to property jdbcTemplate
+     * @param mysqlJdbcTemplate value to be assigned to property mysqlJdbcTemplate
      */
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public void setMysqlJdbcTemplate(JdbcTemplate mysqlJdbcTemplate) {
+        this.mysqlJdbcTemplate = mysqlJdbcTemplate;
     }
 
 }

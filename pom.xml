@@ -152,6 +152,22 @@
             <artifactId>presto-jdbc</artifactId>
             <version>0.200</version>
         </dependency>
+         <!--hbase-common-->
+        <dependency>
+        <groupId>org.apache.hbase</groupId>
+        <artifactId>hbase-common</artifactId>
+        <version>2.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-hadoop</artifactId>
+            <version>2.5.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jd.bdp.hbase</groupId>
+            <artifactId>sdk</artifactId>
+            <version>2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
