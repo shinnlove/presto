@@ -8,6 +8,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.springframework.data.hadoop.hbase.HbaseTemplate;
 
 /**
+ * 自定义Hbase模板。
+ *
  * @author shinnlove.jinsheng
  * @version $Id: MyHbaseTemplate.java, v 0.1 2018-08-21 下午5:32 shinnlove.jinsheng Exp $$
  */

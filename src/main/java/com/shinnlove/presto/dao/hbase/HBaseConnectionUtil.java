@@ -9,6 +9,8 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 
 /**
+ * Hbase连接工具类。
+ *
  * @author shinnlove.jinsheng
  * @version $Id: HBaseConnectionUtil.java, v 0.1 2018-08-21 下午5:19 shinnlove.jinsheng Exp $$
  */

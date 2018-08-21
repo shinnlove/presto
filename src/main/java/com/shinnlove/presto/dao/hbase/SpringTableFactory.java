@@ -12,6 +12,8 @@ import org.apache.hadoop.hbase.client.HTableInterface;
 import org.apache.hadoop.hbase.client.HTableInterfaceFactory;
 
 /**
+ * Spring表工厂。
+ *
  * @author shinnlove.jinsheng
  * @version $Id: SpringTableFactory.java, v 0.1 2018-08-21 下午5:33 shinnlove.jinsheng Exp $$
  */
