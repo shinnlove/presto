@@ -6,6 +6,7 @@ package com.shinnlove.presto.controller;
 
 import java.util.List;
 
+import com.shinnlove.presto.util.anotations.AspectLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +43,7 @@ public class PrestoQueryController {
      * @return
      */
     @RequestMapping(value = "/count", method = { RequestMethod.GET, RequestMethod.POST })
+    @AspectLog
     public JSONObject countUser() {
         int result = userQueryService.countUser();
         return ResponseUtil.success(result);

@@ -23,6 +23,28 @@
     <mvc:resources mapping="/images/**" location="/WEB-INF/static/images/"/>
     <mvc:resources mapping="/error/**" location="/WEB-INF/views/error/"/>
 
+    <!-- handler interceptor -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/query/*" />
+            <bean class="com.shinnlove.presto.controller.interceptor.ControllerAroundInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!-- handler aop -->
+    <bean id="aopLogInterceptor" class="com.shinnlove.presto.controller.interceptor.AopLogInterceptor"/>
+    <!-- aop alliance -->
+    <bean id="daoAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>aopLogInterceptor</value>
+            </list>
+        </property>
+        <property name="beanNames">
+            <value>*Controller</value>
+        </property>
+    </bean>
+
     <!-- spring mvc exception handle -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="defaultErrorView" value="error"></property>
